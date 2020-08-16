@@ -122,6 +122,14 @@ class Superwar {
     // Check for fight
     isFight = () => {
         // Type your code here
+        if(this.players.strength>0)
+        {
+            return 'clash';
+        }
+        else
+        {
+            return 'peace';
+        }
 
         // return  'clash' or 'peace';
     }
@@ -136,11 +144,30 @@ class Superwar {
             setTimeout(() => this.announceWinner(score), 100);
     }
 
+
     // Calculate score
-    calculateScore = () => {
+    calculateScore = (type) => {
         // Calculate and return the total score of teams
         // Type your code here
-
+        var score=0;
+        var arr =[];
+        var j=0;
+        //console.log(type);
+        for(let i=0;i<this.players.length;i++)
+        {
+            //console.log(this.players[i].type);
+            if(this.players[i].type==type)
+            {
+                arr[j]=this.players[i].strength;
+                //console.log(j);
+                j++;
+            }
+        }
+        // console.log(arr);   
+        score = arr.reduce(sum);
+        //console.log(score);
+        
+        //console.log(score);
         return score;
     }
 
@@ -155,6 +182,9 @@ class Superwar {
 
     // Find total strength of a team
     totalStrength = (type) => {
+        var strength=0;
+        strength = this.calculateScore(type);
+        console.log("Strength: "+strength);
         // Calculate and return the total strength of the team
         // Type your code here
 
@@ -173,8 +203,14 @@ class Superwar {
     }
 }
 
+function sum(total,num)
+{  
+    return total+num;
+}
 
 window.onload = () => {
     const superwar = new Superwar(PLAYERS);
     superwar.viewPlayers();
+    //superwar.calculateScore('villain');
+    superwar.totalStrength('hero');
 }
